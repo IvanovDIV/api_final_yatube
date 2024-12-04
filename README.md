@@ -1,82 +1,145 @@
-# api_final
-# Описание
+# Yatube API
 
-<b>Yatube</b> — это платформа для обмена мыслями, идеями и фотографиями. Данное API предоставляет разработчикам возможность интегрировать функции Yatube в свои приложения. API использует архитектуру RESTful и JSON для обмена данными.
+## Описание
 
-Установка
+Yatube — это платформа для обмена мыслями, идеями и фотографиями. Данное API предоставляет разработчикам возможность интегрировать функции Yatube в свои приложения. API использует архитектуру RESTful и JSON для обмена данными.
 
-Клонируйте репозиторий:
+## Установка
 
-клонируйте репозиторий 
-`git https://github.com/IvanovDIV/api_final_yatube.git`
-cd yatube_api
+1. Клонируйте репозиторий:
 
-Создайте и активируйте виртуальное окружение:
+    ```bash
+    git clone https://github.com/IvanovDIV/api_final_yatube.git
+    cd yatube_api
+    ```
 
-`python3 -m venv env`
-`source env/bin/activate # Linux/macOS`
-`env\Scripts\activate # Windows`
+2. Создайте и активируйте виртуальное окружение:
 
-Установите зависимости:
+    ```bash
+    python3 -m venv env
+    ```
 
-`python3 -m pip установить --обновить pip`
-`pip установить -r requirements.txt`
+    - Для Linux/macOS:
+    
+    ```bash
+    source env/bin/activate
+    ```
+    
+    - Для Windows:
+    
+    ```bash
+    env\Scripts\activate
+    ```
 
-Выполните миграции:
+3. Установите зависимости:
 
-python manage.py миграция
-Запустите сервер разработки:
+    ```bash
+    python3 -m pip install --upgrade pip
+    pip install -r requirements.txt
+    ```
 
-python manage.py сервер запуска
-Примеры запросов
-Аутентификация (JWT):
+4. Выполните миграции:
 
-Получение токена:
+    ```bash
+    python manage.py migrate
+    ```
 
-curl -X POST -d "имя_пользователя=<имя_пользователя>&пароль=<пароль>" /api/v1/jwt/create/
-Обновление токена:
+5. Запустите сервер разработки:
 
-curl -X POST -d "refresh=<токен_обновления>" /api/v1/jwt/refresh/
-Работа с публикациями (требуется авторизация):
+    ```bash
+    python manage.py runserver
+    ```
 
-Получение всех публикаций (с пагинацией):
+## Примеры запросов
 
-curl -H "Авторизация: на предъявителя <access_token>" /api/v1/posts/?limit=10&offset=0
-Создание публикации:
+### Аутентификация (JWT):
 
-curl -X POST -H "Authorization: Bearer <access_token>" -d '{"text": "Мой новый пост", "group": 1}' /api/v1/posts/
-Получение публикации по ID:
+- **Получение токена**:
 
-curl -H "Авторизация: предъявитель <токен доступа>" /api/v1/posts/<post_id>/
-Изменение публикации (только автор):
+    ```bash
+    curl -X POST -d "username=<username>&password=<password>" /api/v1/jwt/create/
+    ```
 
-curl -X PUT -H "Авторизация: предъявитель <токен доступа>" -d '{"текст": "измененный текст"}' /api/v1/posts/<post_id>/
-Удаление публикации (только автор):
+- **Обновление токена**:
 
-curl -X DELETE -H "Авторизация: на предъявителя <access_token>" /api/v1/posts/<post_id>/
-Работа с комментариями (требуется авторизация):
+    ```bash
+    curl -X POST -d "refresh=<refresh_token>" /api/v1/jwt/refresh/
+    ```
 
-Получение комментариев к посту:
+### Работа с публикациями (требуется авторизация):
 
-curl -H "Авторизация: на предъявителя <access_token>" /api/v1/сообщения/<post_id>/комментарии/
-Создание комментария:
+- **Получение всех публикаций (с пагинацией)**:
 
-curl -X POST -H "Авторизация: предъявитель <токен доступа>" -d '{"текст": "Мой комментарий"}' /api/v1/posts/<post_id>/comments/
-Работа с группами (не требует авторизации):
+    ```bash
+    curl -H "Authorization: Bearer <access_token>" /api/v1/posts/?limit=10&offset=0
+    ```
 
-Получение списка групп:
+- **Создание публикации**:
 
-curl / api / v1 /группы/
-Получение группы по ID:
+    ```bash
+    curl -X POST -H "Authorization: Bearer <access_token>" -d '{"text": "Мой новый пост", "group": 1}' /api/v1/posts/
+    ```
 
-curl /api/v1/groups/<идентификатор_группы>/
-Работа с подписками (требуется авторизация):
+- **Получение публикации по ID**:
 
-Получение всех подписок:
+    ```bash
+    curl -H "Authorization: Bearer <access_token>" /api/v1/posts/<post_id>/
+    ```
 
-curl -H "Авторизация: на предъявителя <access_token>" /api/v1/следовать/
-Подписка на пользователя:
+- **Изменение публикации (только автор)**:
 
-curl -X POST -H "Авторизация: на предъявителя <access_token>" -d '{"following": "<имя пользователя>"}' /api/v1/следовать/
-Документация API
-Полная документация API доступна по адресу: http://127.0.0.1:8000/redoc/
+    ```bash
+    curl -X PUT -H "Authorization: Bearer <access_token>" -d '{"text": "Измененный текст"}' /api/v1/posts/<post_id>/
+    ```
+
+- **Удаление публикации (только автор)**:
+
+    ```bash
+    curl -X DELETE -H "Authorization: Bearer <access_token>" /api/v1/posts/<post_id>/
+    ```
+
+### Работа с комментариями (требуется авторизация):
+
+- **Получение комментариев к посту**:
+
+    ```bash
+    curl -H "Authorization: Bearer <access_token>" /api/v1/posts/<post_id>/comments/
+    ```
+
+- **Создание комментария**:
+
+    ```bash
+    curl -X POST -H "Authorization: Bearer <access_token>" -d '{"text": "Мой комментарий"}' /api/v1/posts/<post_id>/comments/
+    ```
+
+### Работа с группами (не требует авторизации):
+
+- **Получение списка групп**:
+
+    ```bash
+    curl /api/v1/groups/
+    ```
+
+- **Получение группы по ID**:
+
+    ```bash
+    curl /api/v1/groups/<group_id>/
+    ```
+
+### Работа с подписками (требуется авторизация):
+
+- **Получение всех подписок**:
+
+    ```bash
+    curl -H "Authorization: Bearer <access_token>" /api/v1/follow/
+    ```
+
+- **Подписка на пользователя**:
+
+    ```bash
+    curl -X POST -H "Authorization: Bearer <access_token>" -d '{"following": "<username>"}' /api/v1/follow/
+    ```
+
+## Документация API
+
+Полная документация API доступна по адресу: [http://127.0.0.1:8000/redoc/](http://127.0.0.1:8000/redoc/)
