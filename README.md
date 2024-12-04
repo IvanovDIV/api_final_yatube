@@ -3,19 +3,24 @@
 Yatube — это платформа для обмена мыслями, идеями и фотографиями. Данное API предоставляет разработчикам возможность интегрировать функции Yatube в свои приложения. API использует архитектуру RESTful и JSON для обмена данными.
 
 Установка
+
 Клонируйте репозиторий:
 
-клонируйте репозиторий git https://github.com/srv328/api_final_yatube.git
+клонируйте репозиторий 
+`git https://github.com/IvanovDIV/api_final_yatube.git`
 cd yatube_api
+
 Создайте и активируйте виртуальное окружение:
 
-python3 -m venv env
-source env/bin/activate # Linux/macOS
-env\Scripts\activate # Windows
+`python3 -m venv env`
+`source env/bin/activate # Linux/macOS`
+`env\Scripts\activate # Windows`
+
 Установите зависимости:
 
-python3 -m pip установить --обновить pip
-pip установить -r requirements.txt
+`python3 -m pip установить --обновить pip`
+`pip установить -r requirements.txt`
+
 Выполните миграции:
 
 python manage.py миграция
